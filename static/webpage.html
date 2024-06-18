@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EDM MIDI Generator</title>
+</head>
+<body>
+    <h1>EDM MIDI Generator</h1>
+    <form id="midiForm">
+        <label for="drumPattern">Drum Pattern:</label>
+        <input type="range" id="drumPattern" name="drumPattern" min="0" max="100" value="50"><br>
+
+        <label for="bassline">Bassline:</label>
+        <input type="range" id="bassline" name="bassline" min="0" max="100" value="50"><br>
+
+        <label for="synthesizers">Synthesizers:</label>
+        <input type="range" id="synthesizers" name="synthesizers" min="0" max="100" value="50"><br>
+
+        <label for="effects">Effects:</label>
+        <input type="range" id="effects" name="effects" min="0" max="100" value="50"><br>
+
+        <label for="subgenre">Subgenre:</label>
+        <select id="subgenre" name="subgenre">
+            <option value="house">House</option>
+            <option value="trance">Trance</option>
+            <option value="dubstep">Dubstep</option>
+            <option value="techno">Techno</option>
+            <option value="drum_and_bass">Drum and Bass</option>
+        </select><br><br>
+
+        <button type="button" onclick="generateMidi()">Generate MIDI File</button>
+    </form>
+
+    <script>
+        async function generateMidi() {
+            const form = document.getElementById('midiForm');
+            const formData = new FormData(form);
+            const data = {
+                drumPattern: formData.get('drumPattern'),
+                bassline: formData.get('bassline'),
+                synthesizers: formData.get('synthesizers'),
+                effects: formData.get('effects'),
+                subgenre: formData.get('subgenre')
+            };
+
+            const response = await fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            });
+
+            if (response.ok) {
+                const blob = await response.blob();
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'generated_track.mid';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+            } else {
+                console.error('Failed to generate MIDI file');
+            }
+        }
+    </script>
+</body>
+</html>
