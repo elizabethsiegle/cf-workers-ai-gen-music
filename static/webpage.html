@@ -4,21 +4,100 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>EDM MIDI Generator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .container {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            max-width: 400px;
+            width: 100%;
+        }
+        
+        h1 {
+            text-align: center;
+            color: #333;
+        }
+        
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        label {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #555;
+        }
+        
+        input[type="range"] {
+            width: 100%;
+            margin: 5px 0 20px;
+        }
+        
+        select {
+            padding: 5px;
+            margin: 5px 0 20px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+        
+        button {
+            padding: 10px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        
+        button:hover {
+            background-color: #45a049;
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #5c2358;
+            color: #fff;
+            text-align: center;
+            padding: 10px 0;
+            font-size: 18px;
+        }
+        footer a {
+            color: #fff;
+            text-decoration: underline;
+        }
+    </style>
+    </style>
 </head>
 <body>
     <h1>EDM MIDI Generator</h1>
     <form id="midiForm">
         <label for="drumPattern">Drum Pattern:</label>
-        <input type="range" id="drumPattern" name="drumPattern" min="0" max="100" value="50"><br>
+        <input type="range" min="1" max="100" value="50" id="drumPattern" name="drumPattern" min="0" max="100" value="50"><br>
 
         <label for="bassline">Bassline:</label>
-        <input type="range" id="bassline" name="bassline" min="0" max="100" value="50"><br>
+        <input type="range" min="1" max="100" value="50" id="bassline" name="bassline" min="0" max="100" value="50"><br>
 
         <label for="synthesizers">Synthesizers:</label>
-        <input type="range" id="synthesizers" name="synthesizers" min="0" max="100" value="50"><br>
+        <input type="range" min="1" max="100" value="50" id="synthesizers" name="synthesizers" min="0" max="100" value="50"><br>
 
         <label for="effects">Effects:</label>
-        <input type="range" id="effects" name="effects" min="0" max="100" value="50"><br>
+        <input type="range" min="1" max="100" value="50" id="effects" name="effects" min="0" max="100" value="50"><br>
 
         <label for="subgenre">Subgenre:</label>
         <select id="subgenre" name="subgenre">
@@ -28,6 +107,8 @@
             <option value="techno">Techno</option>
             <option value="drum_and_bass">Drum and Bass</option>
         </select><br><br>
+        <label for="vibes">How would you want listeners to describe this track?</label>
+        <input type="text" id="vibes" name="vibes" placeholder="Vibes"><br><br>
 
         <button type="button" onclick="generateMidi()">Generate MIDI File</button>
     </form>
@@ -41,7 +122,8 @@
                 bassline: formData.get('bassline'),
                 synthesizers: formData.get('synthesizers'),
                 effects: formData.get('effects'),
-                subgenre: formData.get('subgenre')
+                subgenre: formData.get('subgenre'),
+                vibes: formData.get('vibes')
             };
 
             const response = await fetch('/generate', {
@@ -66,5 +148,8 @@
             }
         }
     </script>
+    <footer>
+        <p>Built w/ 🧡 in SF🌁 on <a href="https://workers.cloudflare.com/" target="_blank">Cloudflare Workers</a> with <a href="https://ai.cloudflare.com" target="_blank">Workers AI</a>👩🏻‍💻 ➡️ <a href="https://github.com/elizabethsiegle/cf-workers-ai-gen-music/tree/main" target="_blank">code</a></p>
+    </footer>
 </body>
 </html>
