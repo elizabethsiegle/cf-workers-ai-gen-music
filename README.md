@@ -1,5 +1,5 @@
-# Generate EDM midi music with[Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) and [midi-writer-js](https://www.npmjs.com/package/midi-writer-js)
-![cover img](workersmusic.png)
+# Generate EDM midi music with [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai/) && [midi-writer-js](https://www.npmjs.com/package/midi-writer-js)
+![cover img](edmmusicai.png)
 
 [Test it out yourself here](https://edm-midijs.cloudspacevn.workers.dev/)!
 
